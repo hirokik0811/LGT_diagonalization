@@ -1,9 +1,8 @@
+
+#ifndef KRONECKER_INCLUDED
+#define KRONECKER_INCLUDED
 #pragma once
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <complex.h>
-#include <assert.h>
 #include <mkl.h>
 
 
@@ -26,17 +25,17 @@ sparse_status_t kronecker_sparse_c_csr(sparse_matrix_t *C, sparse_matrix_t const
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
 	int cnt = 0; // count from 0 to nnzC to specify the location of a value to be stored. Used as computing C matrix. 
-
 	// output locations for mkl_sparse_c_export_csr
-	MKL_INT n_rowsA, n_rowsB, n_colsA, n_colsB, 
+
+	MKL_INT n_rowsA, n_rowsB, n_colsA, n_colsB,
 		*rows_startA = NULL, *rows_startB = NULL, *rows_endA = NULL, *rows_endB = NULL, *col_indxA = NULL, *col_indxB = NULL;
 	MKL_Complex8 *valuesA = NULL, *valuesB = NULL;
 
 	// number of non-zero elements of matrices A, B, and C
-	int nnzA, nnzB, nnzC;
+	MKL_INT nnzA, nnzB, nnzC;
 
 	// shape of the output matrix C
-	int n_rowsC, n_colsC;
+	MKL_INT n_rowsC, n_colsC;
 
 	// memory to store the values of C
 	MKL_Complex8* valuesC = NULL;
@@ -65,10 +64,10 @@ sparse_status_t kronecker_sparse_c_csr(sparse_matrix_t *C, sparse_matrix_t const
 
 	// compute C
 	for (int rowA = 0; rowA < n_rowsA; ++rowA) {
-		for (int i = rows_startA[rowA]; i < rows_endA[rowA]; ++i) {
+		for (int i = rows_startA[rowA]; i < rows_endA[rowA]; i++) {
 			int colA = col_indxA[i];
 			for (int rowB = 0; rowB < n_rowsB; ++rowB) {
-				for (int j = rows_startB[rowB]; j < rows_endB[rowB]; ++j) {
+				for (int j = rows_startB[rowB]; j < rows_endB[rowB]; j++) {
 					int colB = col_indxB[j];
 					//printf("a_%d%d x b_%d%d \n", rowA, colA, rowB, colB);
 					valuesC[cnt] = { valuesA[i].real * valuesB[j].real - valuesA[i].imag * valuesB[j].imag, valuesA[i].real * valuesB[j].imag + valuesA[i].imag * valuesB[j].real };
@@ -85,13 +84,13 @@ sparse_status_t kronecker_sparse_c_csr(sparse_matrix_t *C, sparse_matrix_t const
 	// convert C to csr format
 	CALL_AND_CHECK_STATUS(mkl_sparse_convert_csr(cooC, SPARSE_OPERATION_NON_TRANSPOSE, C), "Error occurs in mkl_sparse_convert_csr(C) with ID: %d\n", status);
 
-	return status;
 /* Deallocate memory */
 memory_free :
 
 	// delocate memories used for extracting data of matrices A and B.
-	mkl_free(rows_startA); mkl_free(rows_startB); mkl_free(rows_endA); mkl_free(rows_endB); mkl_free(col_indxA); mkl_free(col_indxB);
-	mkl_free(valuesA); mkl_free(valuesB);
+	mkl_free(valuesC); 
+	mkl_free(rows_indxC); 
+	mkl_free(cols_indxC);
 
 	//Release matrix handle and deallocate arrays for which we allocate memory ourselves.
 	status = mkl_sparse_destroy(cooC);
@@ -100,4 +99,8 @@ memory_free :
 		printf(" Error after MKL_SPARSE_DESTROY(cooC) \n"); fflush(0);
 	}
 
+    // return status
+	return status;
+
 }
+#endif

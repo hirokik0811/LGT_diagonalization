@@ -30,6 +30,12 @@
     <ClCompile Include="test_sigma.cpp">
       <Filter>Source Files\test_codes</Filter>
     </ClCompile>
+    <ClCompile Include="pauli_hamiltonian.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_pauliHamiltonian.cpp">
+      <Filter>Source Files\test_codes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sigma_matrix.h">
@@ -42,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eigensolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pauli_hamiltonian.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

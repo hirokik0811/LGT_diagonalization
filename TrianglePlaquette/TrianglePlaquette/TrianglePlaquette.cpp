@@ -2,22 +2,22 @@
 //
 
 #include <iostream>
-#include "pauli_operator.h"
+#include "pauli_hamiltonian.h"
 
 
 int main()
 {
 #define CALL_AND_CHECK_STATUS(function, error_message) do { \
-          if(function != SPARSE_STATUS_SUCCESS)             \
-          {                                                 \
-          printf(error_message); fflush(0);                 \
-          status = function;                                       \
-          goto memory_free;                                 \
-          }                                                 \
+		  if(function != SPARSE_STATUS_SUCCESS)             \
+		  {                                                 \
+		  printf(error_message); fflush(0);                 \
+		  status = function;                                       \
+		  goto memory_free;                                 \
+		  }                                                 \
 } while(0)
 
-	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
-	sparse_matrix_t* P = NULL;
+	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations.
+	sparse_matrix_t P = NULL;
 	sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
 
 	MKL_Complex8* valuesP = NULL;
@@ -29,32 +29,42 @@ int main()
 
 	int ii = 0;
 
-	int pauliList[2] = { 0, 1 };
-	PauliOperator pauli(2, pauliList, 0.5);
-	P = pauli.matrixLocation();
-	
+	float coefList[2] = { 0.5, 0.5 };
+	int** listOfPauliList = new int*[2];
+	for (int i = 0; i < 2; ++i) {
+		listOfPauliList[i] = new int[2];
+	}
+	listOfPauliList[0][0] = 0; listOfPauliList[0][1] = 1;
+	listOfPauliList[1][0] = 2; listOfPauliList[1][1] = 3;
 
-	CALL_AND_CHECK_STATUS(mkl_sparse_c_export_csr(*P, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
+	PauliHamiltonian pauli(2, 2, listOfPauliList, (float*)coefList);
+	CALL_AND_CHECK_STATUS(pauli.copyMatrix(&P), "Error during copying a matrix");
+
+	CALL_AND_CHECK_STATUS(mkl_sparse_c_export_csr(P, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
 		"Error after MKL_SPARSE_C_EXPORT_CSR  P\n");
 
-    printf("P \n");
+	printf("P \n");
 	printf("Shape: %d x %d \n", n_rowsP, n_colsP);
 	for (int i = 0; i < n_rowsP; i++)
 	{
 		printf("row#%d:", i + 1); fflush(0);
 		for (int j = pointerB_P[i]; j < pointerE_P[i]; j++)
 		{
-			printf(" %5.3f + %5.3f I at col#%6d", valuesP[ii].real, valuesP[ii].imag, columns_P[ii]+1); fflush(0);
+			printf(" %5.3f + %5.3f I at col#%6d", valuesP[ii].real, valuesP[ii].imag, columns_P[ii] + 1); fflush(0);
 			ii++;
 		}
 		printf("\n");
 	}
 
 memory_free:
-	if (mkl_sparse_destroy(*P) != SPARSE_STATUS_SUCCESS)
+	if (mkl_sparse_destroy(P) != SPARSE_STATUS_SUCCESS)
 	{
-		printf(" Error after MKL_SPARSE_DESTROY(P) \n"); fflush(0); status = mkl_sparse_destroy(*P);
+		printf(" Error after MKL_SPARSE_DESTROY(P) \n"); fflush(0); status = mkl_sparse_destroy(P);
 	}
+	for (int i = 0; i < 1; ++i) {
+		delete[] listOfPauliList[i];
+	}
+	delete[] listOfPauliList;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

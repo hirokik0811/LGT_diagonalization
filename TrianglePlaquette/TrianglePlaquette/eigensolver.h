@@ -80,6 +80,8 @@
 !          CGEMM (BLAS Level 3 Routine) is called  to compute (X')*X.
 !
 !*******************************************************************************/
+#ifndef EIGENSOLVER_INCLUDED
+#define EIGENSOLVER_INCLUDED
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -425,3 +427,4 @@ int eigensolver()
 
 	return 0;
 }
+#endif

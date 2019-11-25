@@ -45,6 +45,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseIntelMKL>Parallel</UseIntelMKL>
+    <UseILP64Interfaces>false</UseILP64Interfaces>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -152,14 +153,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="pauli_hamiltonian.cpp" />
     <ClCompile Include="pauli_operator.cpp" />
     <ClCompile Include="test_kron.cpp" />
+    <ClCompile Include="test_pauliHamiltonian.cpp" />
     <ClCompile Include="test_sigma.cpp" />
     <ClCompile Include="TrianglePlaquette.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eigensolver.h" />
     <ClInclude Include="kronecker.h" />
+    <ClInclude Include="pauli_hamiltonian.h" />
     <ClInclude Include="pauli_operator.h" />
     <ClInclude Include="sigma_matrix.h" />
   </ItemGroup>

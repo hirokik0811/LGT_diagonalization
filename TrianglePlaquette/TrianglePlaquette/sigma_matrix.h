@@ -1,4 +1,6 @@
 #pragma once
+#ifndef SIGMA_INCLUDED
+#define SIGMA_INCLUDED
 #include <stdio.h>
 #include <mkl.h>
 
@@ -37,7 +39,10 @@ sparse_status_t sigma_matrix(sparse_matrix_t* S, int const id, float const coef)
 	CALL_AND_CHECK_STATUS(mkl_sparse_c_create_csr(S, SPARSE_INDEX_BASE_ZERO, 2, 2, rowIndex, rowIndex + 1, columns, values),
 		"Error in MKL_SPARSE_C_CREATE_CSR, Sigma matrix %d \n", id);
 
-	return status;
 memory_free:
 	mkl_free(values); mkl_free(columns); mkl_free(rowIndex);
+
+	// return status
+	return status;
 }
+#endif
