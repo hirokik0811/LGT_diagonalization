@@ -108,6 +108,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsC</CompileAs>
+      <ExceptionHandling>false</ExceptionHandling>
+      <EnableModules>false</EnableModules>
+      <AdditionalIncludeDirectories />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,12 +157,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="pauli_hamiltonian.cpp" />
-    <ClCompile Include="pauli_operator.cpp" />
-    <ClCompile Include="test_kron.cpp" />
-    <ClCompile Include="test_pauliHamiltonian.cpp" />
-    <ClCompile Include="test_sigma.cpp" />
-    <ClCompile Include="TrianglePlaquette.cpp" />
+    <ClCompile Include="test_kron.c" />
+    <ClCompile Include="test_pauliHamiltonian.c" />
+    <ClCompile Include="test_paulioperators.c" />
+    <ClCompile Include="test_sigma.c" />
+    <ClCompile Include="TrianglePlaquette.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eigensolver.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="pauli_hamiltonian.h" />
     <ClInclude Include="pauli_operator.h" />
     <ClInclude Include="sigma_matrix.h" />
+    <ClInclude Include="triangle_plaquette_hamiltonian.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

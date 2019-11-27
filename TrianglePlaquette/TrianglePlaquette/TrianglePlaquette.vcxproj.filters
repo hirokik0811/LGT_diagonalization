@@ -18,22 +18,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TrianglePlaquette.cpp">
+    <ClCompile Include="TrianglePlaquette.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test_kron.cpp">
+    <ClCompile Include="test_kron.c">
       <Filter>Source Files\test_codes</Filter>
     </ClCompile>
-    <ClCompile Include="pauli_operator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="test_sigma.cpp">
+    <ClCompile Include="test_pauliHamiltonian.c">
       <Filter>Source Files\test_codes</Filter>
     </ClCompile>
-    <ClCompile Include="pauli_hamiltonian.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="test_paulioperators.c">
+      <Filter>Source Files\test_codes</Filter>
     </ClCompile>
-    <ClCompile Include="test_pauliHamiltonian.cpp">
+    <ClCompile Include="test_sigma.c">
       <Filter>Source Files\test_codes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pauli_hamiltonian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="triangle_plaquette_hamiltonian.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
