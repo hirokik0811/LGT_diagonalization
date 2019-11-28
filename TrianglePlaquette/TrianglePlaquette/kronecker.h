@@ -90,7 +90,7 @@ sparse_status_t kronecker_sparse_z_csr(sparse_matrix_t * const C, sparse_matrix_
 		}
 	}
 	// create C in coo format
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_create_coo(&cooC, indexing, n_rowsC, n_colsC, nnzC, rows_indxC, cols_indxC, valuesC), "Error occurs while constructing coo.\n")
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_create_coo(&cooC, indexing, n_rowsC, n_colsC, nnzC, rows_indxC, cols_indxC, valuesC), "Error occurs while constructing coo.\n");
 	// convert C to csr format
 	CALL_AND_CHECK_STATUS(mkl_sparse_convert_csr(cooC, SPARSE_OPERATION_NON_TRANSPOSE, C), "Error occurs during converting coo to csr.\n");
 
