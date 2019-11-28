@@ -44,7 +44,7 @@ sparse_status_t sigma_matrix(sparse_matrix_t* const S, int const id, double cons
 	}
 
 	CALL_AND_CHECK_STATUS(mkl_sparse_z_create_csr(S, SPARSE_INDEX_BASE_ZERO, 2, 2, rowIndex, rowIndex + 1, columns, values),
-		("Error in MKL_SPARSE_Z_CREATE_CSR, Sigma matrix %d \n", id));
+		"Error when creating the sigma matrix in csr format\n");
 
 memory_free:
 	//mkl_free(values); mkl_free(columns); mkl_free(rowIndex);

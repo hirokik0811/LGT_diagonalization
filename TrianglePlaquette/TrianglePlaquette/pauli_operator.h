@@ -35,7 +35,7 @@ sparse_status_t pauli_operator_matrix(sparse_matrix_t* const dest, int const nQu
 	int i;
 	for (i = 1; i < nQubits; ++i) {
 		CALL_AND_CHECK_STATUS(sigma_matrix(&S, pauliList[i], 1.0), "Error constructing a sigma matrix\n");
-		CALL_AND_CHECK_STATUS(kronecker_sparse_z_csr(&Prod, Prod, S), ("Error during kronecker_sparse_z_csr at site %d \n", i));
+		CALL_AND_CHECK_STATUS(kronecker_sparse_z_csr(&Prod, Prod, S), "Error during kronecker_sparse_z_csr\n");
 	}
 	CALL_AND_CHECK_STATUS(mkl_sparse_copy(Prod, descr, dest), "Error copying the kronecker result \n");
 
