@@ -9,4 +9,4 @@ Currently this returns the eigenvalues in a search range which can be specified 
 You may also specify the coefficients of the Hamiltonian. 
 
 # How to use
-Compile TrianglePlaquette/TrianglePlaquette.c with -mkl. Checked it works properly with Intel C Compiler, but you may need to modify some codes for other compilers. 
+Compile TrianglePlaquette/TrianglePlaquette.c -mkl. Checked it works properly with Intel C Compiler, but you may need to modify some codes for other compilers. The executable takes 5 arguments: number of layers, the value of g, the value of alpha, search range min, search range max. 
