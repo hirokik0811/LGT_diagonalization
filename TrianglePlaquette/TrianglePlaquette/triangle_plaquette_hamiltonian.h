@@ -135,7 +135,7 @@ sparse_status_t triangle_plaquette_hamiltonian_matrix(sparse_matrix_t* const des
 
 memory_free:
 	free(coefs);
-	for (int i = 0; i < 1; ++i) {
+	for (i = 0; i < 1; ++i) {
 		free(listOfPauliList[i]);
 	}
 	free(listOfPauliList);

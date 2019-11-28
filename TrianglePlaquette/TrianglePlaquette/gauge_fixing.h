@@ -164,7 +164,7 @@ sparse_status_t zero_gauge_block(sparse_matrix_t* const dest, sparse_matrix_t co
 		"Error after MKL_SPARSE_Z_EXPORT_CSR  J31\n");
 	
 	// compute the squared sums
-	gauge_square_sum = (indexed_double*)malloc(matDim * sizeof(indexed_double), 64);
+	gauge_square_sum = (indexed_double*)malloc(matDim * sizeof(indexed_double));
 	indZeros = (int*)malloc(matDim * sizeof(int));
 	int nZeros = 0;
 	for (i = 0; i < matDim; ++i) {

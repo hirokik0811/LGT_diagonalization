@@ -5,9 +5,11 @@
 #include <math.h>
 #include "triangle_plaquette_hamiltonian.h"
 #include "gauge_fixing.h"
-#define N_LAYERS 4
-#define G 1.0
-#define ALPHA 1.0
+//#define N_LAYERS 2
+//#define G 0.1
+//#define ALPHA 1.0
+//#define EMIN 0.0 // the minimum of the search range of the feast algorithm
+//#define EMAX 1000.0 // the maxmum 
 
 int main(int argc, char* argv[])
 {
@@ -19,6 +21,26 @@ int main(int argc, char* argv[])
 		  goto memory_free;                                 \
 		  }                                                 \
 } while(0)
+
+	int nLayers;
+	double g, alpha, Emin, Emax;
+	printf("Specify Values:\n");
+	printf("What's the number of layers?: ");
+	scanf_s("%d", &nLayers, sizeof(int));
+	printf("\n");
+	printf("Coefficients: What's the value of g?: ");
+	scanf_s("%lf", &g, sizeof(double));
+	printf("What's the value of alpha?: ");
+	scanf_s("%lf", &alpha, sizeof(double));
+	printf("\n");
+	printf("Search Range of FEAST Solver: MIN: ");
+	scanf_s("%lf", &Emin, sizeof(double));
+	printf("MAX: ");
+	scanf_s("%lf", &Emax, sizeof(double));
+	printf("G: %f", g);
+
+
+	int i = 0, ii = 0, j = 0;
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations.
 	sparse_matrix_t H = NULL;
@@ -35,7 +57,6 @@ int main(int argc, char* argv[])
 	char UPLO = 'F'; // Type of matrix: (F=full matrix, L/U - lower/upper triangular part of matrix);
 	MKL_INT* rows_indx = NULL;
 	MKL_INT fpm[128];      /* Array to pass parameters to Intel(R) MKL Extended Eigensolvers */
-	double        Emin = 0.0, Emax = 20.0;    /* Lower/upper bound of search interval [Emin,Emax] */
 
 	double       epsout;        /* Relative error of the trace */
 	MKL_INT      loop;          /* Number of refinement loop */
@@ -50,14 +71,11 @@ int main(int argc, char* argv[])
 	//
 
 
-	int i = 0, ii = 0;
-
-
 	// Compute the Hamiltonian matrix of the triangle model and store it to P
-	CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, N_LAYERS, G, ALPHA), "Error during computing a triangle plaquette matrix");
+	CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
 	
 	// Compute the block Hamiltonian with zero flux
-	CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, N_LAYERS),
+	CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
 		"Error during computing a block Hamiltonian corresponding to zero flux\n");
 
 	// Check the data
@@ -80,7 +98,7 @@ int main(int argc, char* argv[])
 	printf("Shape: %d x %d \n", n_rowsP, n_colsP);
 	for (i = 0; i < n_rowsP; i++)
 	{
-		for (int j = pointerB_P[i]; j < pointerE_P[i]; j++)
+		for (j = pointerB_P[i]; j < pointerE_P[i]; j++)
 		{
 			printf(" {%d, %d} -> %5.3f + %5.3f I,", i+1, columns_P[ii], valuesP[ii].real, valuesP[ii].imag); fflush(0);
 			ii++;

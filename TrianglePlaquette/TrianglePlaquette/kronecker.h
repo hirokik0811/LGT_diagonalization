@@ -53,14 +53,14 @@ sparse_status_t kronecker_sparse_z_csr(sparse_matrix_t * const C, sparse_matrix_
 
 
 	// export A
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(A, &indexing, &n_rowsA, &n_colsA, &rows_startA, &rows_endA, &col_indxA, &valuesA), "Error occurs in mkl_sparse_z_export_csr(A) with ID: %d\n", status);
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(A, &indexing, &n_rowsA, &n_colsA, &rows_startA, &rows_endA, &col_indxA, &valuesA), "Error occurs when exporting A\n");
 
 	// count the number of non-zero elements in each matrix
 	nnzA = rows_endA[n_rowsA - 1];
 
 	
 	// export B
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(B, &indexing, &n_rowsB, &n_colsB, &rows_startB, &rows_endB, &col_indxB, &valuesB), "Error occurs in mkl_sparse_z_export_csr(B) with ID: %d\n", status);
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(B, &indexing, &n_rowsB, &n_colsB, &rows_startB, &rows_endB, &col_indxB, &valuesB), "Error occurs when exporting B\n");
 
 	nnzB = rows_endB[n_rowsB - 1];
 
@@ -90,9 +90,9 @@ sparse_status_t kronecker_sparse_z_csr(sparse_matrix_t * const C, sparse_matrix_
 		}
 	}
 	// create C in coo format
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_create_coo(&cooC, indexing, n_rowsC, n_colsC, nnzC, rows_indxC, cols_indxC, valuesC), "Error occurs in mkl_sparse_z_create_coo(C) with ID: %d\n", status);
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_create_coo(&cooC, indexing, n_rowsC, n_colsC, nnzC, rows_indxC, cols_indxC, valuesC), "Error occurs while constructing coo.\n")
 	// convert C to csr format
-	CALL_AND_CHECK_STATUS(mkl_sparse_convert_csr(cooC, SPARSE_OPERATION_NON_TRANSPOSE, C), "Error occurs in mkl_sparse_convert_csr(C) with ID: %d\n", status);
+	CALL_AND_CHECK_STATUS(mkl_sparse_convert_csr(cooC, SPARSE_OPERATION_NON_TRANSPOSE, C), "Error occurs during converting coo to csr.\n");
 
 /* Deallocate memory */
 memory_free :

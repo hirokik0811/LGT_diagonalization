@@ -37,10 +37,10 @@ sparse_status_t pauli_hamiltonian_matrix(sparse_matrix_t* const dest, int const 
 		for (j = 0; j < nQubits; ++j) {
 			pauliList[j] = listOfPauliList[i][j];
 		}
-		CALL_AND_CHECK_STATUS(pauli_operator_matrix(&P, nQubits, pauliList, coefs[i]), "Error during computing %d th pauli term\n", i); // define the ith pauli term
+		CALL_AND_CHECK_STATUS(pauli_operator_matrix(&P, nQubits, pauliList, coefs[i]), ("Error during computing %d th pauli term\n", i)); // define the ith pauli term
 		MKL_Complex16 one = { 1.0, 0.0 };
 		CALL_AND_CHECK_STATUS(mkl_sparse_z_add(SPARSE_OPERATION_NON_TRANSPOSE, Sum, one, P, &Sum),
-			"Error during addition of two pauli terms at %d th site\n", i);
+			("Error during addition of two pauli terms at %d th site\n", i));
 	}	
 	CALL_AND_CHECK_STATUS(mkl_sparse_copy(Sum, descr, dest), "Error during copying a pauli operator\n");
 
