@@ -26,18 +26,17 @@ int main(int argc, char* argv[])
 	double g, alpha, Emin, Emax;
 	printf("Specify Values:\n");
 	printf("What's the number of layers?: ");
-	scanf_s("%d", &nLayers, sizeof(int));
+	scanf("%d", &nLayers);
 	printf("\n");
 	printf("Coefficients: What's the value of g?: ");
-	scanf_s("%lf", &g, sizeof(double));
+	scanf("%lf", &g);
 	printf("What's the value of alpha?: ");
-	scanf_s("%lf", &alpha, sizeof(double));
+	scanf("%lf", &alpha);
 	printf("\n");
 	printf("Search Range of FEAST Solver: MIN: ");
-	scanf_s("%lf", &Emin, sizeof(double));
+	scanf("%lf", &Emin);
 	printf("MAX: ");
-	scanf_s("%lf", &Emax, sizeof(double));
-	printf("G: %f", g);
+	scanf("%lf", &Emax);
 
 
 	int i = 0, ii = 0, j = 0;
