@@ -53,5 +53,8 @@
     <ClInclude Include="triangle_plaquette_hamiltonian.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gauge_fixing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

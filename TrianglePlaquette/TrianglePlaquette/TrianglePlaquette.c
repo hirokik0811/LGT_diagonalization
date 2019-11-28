@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include "triangle_plaquette_hamiltonian.h"
-#define N_LAYERS 2
+#include "gauge_fixing.h"
+#define N_LAYERS 4
 #define G 1.0
 #define ALPHA 1.0
 
@@ -20,7 +21,8 @@ int main(int argc, char* argv[])
 } while(0)
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations.
-	sparse_matrix_t P = NULL;
+	sparse_matrix_t H = NULL;
+	sparse_matrix_t zeroH = NULL;
 	sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
 
 	MKL_Complex16* valuesP = NULL;
@@ -33,11 +35,11 @@ int main(int argc, char* argv[])
 	char UPLO = 'F'; // Type of matrix: (F=full matrix, L/U - lower/upper triangular part of matrix);
 	MKL_INT* rows_indx = NULL;
 	MKL_INT fpm[128];      /* Array to pass parameters to Intel(R) MKL Extended Eigensolvers */
-	double        Emin = 0.9, Emax = 14.0;    /* Lower/upper bound of search interval [Emin,Emax] */
+	double        Emin = 0.0, Emax = 20.0;    /* Lower/upper bound of search interval [Emin,Emax] */
 
 	double       epsout;        /* Relative error of the trace */
 	MKL_INT      loop;          /* Number of refinement loop */
-	MKL_INT      M0 = pow(2, 3*N_LAYERS);            /* Initial guess for subspace dimension to be used */
+	MKL_INT      M0;            /* Initial guess for subspace dimension to be used */
 	MKL_INT      M;             /* Total number of eigenvalues found in the interval */
 
 	double* E = NULL;      /* Eigenvalues */
@@ -52,17 +54,24 @@ int main(int argc, char* argv[])
 
 
 	// Compute the Hamiltonian matrix of the triangle model and store it to P
-	CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&P, N_LAYERS, G, ALPHA), "Error during computing a triangle plaquette matrix");
+	CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, N_LAYERS, G, ALPHA), "Error during computing a triangle plaquette matrix");
+	
+	// Compute the block Hamiltonian with zero flux
+	CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, N_LAYERS),
+		"Error during computing a block Hamiltonian corresponding to zero flux\n");
 
 	// Check the data
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(P, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
-		"Error after MKL_SPARSE_Z_EXPORT_CSR  P\n");
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(zeroH, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
+		"Error after MKL_SPARSE_Z_EXPORT_CSR  H\n");
+
 
 	// Convert zero-based indexing to one-based indexing
 	for (i = 0; i < n_rowsP; ++i) {
 		pointerB_P[i] ++;
 	}
-	pointerE_P[n_rowsP-1] ++;
+	pointerE_P[n_rowsP - 1]++;
+
+	printf("pointerE_P[n_rowsP - 1] - 1 %d\n", (pointerE_P[n_rowsP - 1] - 1));
 	for (i = 0; i < pointerE_P[n_rowsP - 1] - 1; ++i) {
 		columns_P[i]++;
 	}
@@ -87,6 +96,7 @@ int main(int argc, char* argv[])
 		rows_indx[i] = pointerB_P[i];
 	rows_indx[n_rowsP] = pointerE_P[n_rowsP - 1];
 
+	M0 = n_rowsP;
 	E = (double*)malloc(n_rowsP * sizeof(double));
 	X = (MKL_Complex16*)malloc((n_rowsP * n_rowsP ) * sizeof(MKL_Complex16));
 	res = (double*)malloc(n_rowsP * sizeof(double));
@@ -123,7 +133,7 @@ int main(int argc, char* argv[])
 		printf("Routine zfeast_hcsrev returns code of ERROR: %i", (int)info);
 		return 1;
 	}
-
+	
 	double        Eig[64] = { 0.97904, 4.96887, 4.96887, 4.96887, 4.96887, 4.96887, 4.96887, 5., \
                                5., 5., 8.82186, 8.93845, 8.93845, 8.93845, 8.93845, 8.93845, \
                                8.93845, 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., \
@@ -133,8 +143,10 @@ int main(int argc, char* argv[])
                                 13.1991 };       /* Eig - array for storing exact eigenvalues */
 	double        R[64];         /* R = |E-Eig| */
 
+	
 	/* Step 3. Compute the residual R(i) = | E(i) - Eig(i) |  where Eig(i)
 	* are the expected eigenvalues and E(i) are eigenvalues computed by CFEAST_HCSREV(). */
+	/*
 	printf("Number of eigenvalues found %d \n", M);
 	printf("Computed      |    Expected    \n");
 	printf("Eigenvalues   |    Eigenvalues \n");
@@ -146,15 +158,30 @@ int main(int argc, char* argv[])
 		printf("%.7e  %.7e \n", E[i], Eig[i]);
 	}
 	printf("Max value of | computed eigenvalue(i) - expected eigenvalues(i) | %.7e \n", eigabs);
+	*/
 
+	printf("Number of eigenvalues found %d \n", M);
+	printf("Computed\n");
+	printf("Eigenvalues\n");
+	double eigabs = 0.0;
+	for (i = 0; i < M; i++)
+	{
+		printf("%.7e\n", E[i]);
+	}
 
 memory_free:
 	free(E);
 	free(X);
 	free(res);
-	if (mkl_sparse_destroy(P) != SPARSE_STATUS_SUCCESS)
+	status = mkl_sparse_destroy(H);
+	if (status != SPARSE_STATUS_SUCCESS)
 	{
-		printf(" Error after MKL_SPARSE_DESTROY(P) \n"); fflush(0); status = mkl_sparse_destroy(P);
+		printf(" Error after MKL_SPARSE_DESTROY(H) \n"); fflush(0);
+	}
+	status = mkl_sparse_destroy(zeroH);
+	if (status != SPARSE_STATUS_SUCCESS)
+	{
+		printf(" Error after MKL_SPARSE_DESTROY(zeroH) \n"); fflush(0);
 	}
 
 	return 0;

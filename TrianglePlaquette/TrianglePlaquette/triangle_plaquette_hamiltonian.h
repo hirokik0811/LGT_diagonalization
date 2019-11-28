@@ -130,7 +130,7 @@ sparse_status_t triangle_plaquette_hamiltonian_matrix(sparse_matrix_t* const des
 	cnt++;
 
 
-	// load the constructor of the parent class
+	// Compute the Hamiltonian of the model in Pauli basis
 	CALL_AND_CHECK_STATUS(pauli_hamiltonian_matrix(dest, nQubits, pauliLength, listOfPauliList, coefs), "Error during computing the pauli hamiltonian\n");
 
 memory_free:
