@@ -22,22 +22,14 @@ int main(int argc, char* argv[])
 		  }                                                 \
 } while(0)
 
-	int nLayers;
-	double g, alpha, Emin, Emax;
-	printf("Specify Values:\n");
-	printf("What's the number of layers?: ");
-	scanf("%d", &nLayers);
-	printf("\n");
-	printf("Coefficients: What's the value of g?: ");
-	scanf("%lf", &g);
-	printf("What's the value of alpha?: ");
-	scanf("%lf", &alpha);
-	printf("\n");
-	printf("Search Range of FEAST Solver: MIN: ");
-	scanf("%lf", &Emin);
-	printf("MAX: ");
-	scanf("%lf", &Emax);
+	if (argc != 6) {
+		printf("invalid number of arguments. Aborting...");
+		return 1;
+	}
 
+	int nLayers = atoi(argv[1]);
+	double g = atof(argv[2]), alpha = atof(argv[3]), Emin= atof(argv[4]), Emax = atof(argv[5]);
+	
 
 	int i = 0, ii = 0, j = 0;
 
