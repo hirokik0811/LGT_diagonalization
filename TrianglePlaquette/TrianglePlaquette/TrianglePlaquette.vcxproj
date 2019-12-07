@@ -165,11 +165,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eigensolver.h" />
-    <ClInclude Include="gauge_fixing.h" />
     <ClInclude Include="kronecker.h" />
     <ClInclude Include="pauli_hamiltonian.h" />
     <ClInclude Include="pauli_operator.h" />
     <ClInclude Include="sigma_matrix.h" />
+    <ClInclude Include="square_tessellation.h" />
     <ClInclude Include="triangle_plaquette_hamiltonian.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
