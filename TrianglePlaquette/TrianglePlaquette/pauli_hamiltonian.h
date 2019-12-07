@@ -52,6 +52,11 @@ memory_free:
 	{
 		printf(" Error during MKL_SPARSE_DESTROY(Sum) \n"); fflush(0);
 	}
+	status = mkl_sparse_destroy(P);
+	if (status != SPARSE_STATUS_SUCCESS)
+	{
+		printf(" Error during MKL_SPARSE_DESTROY(P) \n"); fflush(0);
+	}
 
 	return status;
 }
