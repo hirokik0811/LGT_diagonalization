@@ -35,7 +35,7 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 	//     4 6 
 	//     D
 	//
-	// E = \sum_j (Z_s+Z_{s+12})^2
+	// E = \sum_j (Z_j+Z_{j+12})^2
 	// Coupling = \sum_j (S+_j S-_{j+12} + S-_j S+_{j+12})
 	// B = \sum_s (S+_3s S+_{3s+1} S+_{3s+2} + h.c.) + \sum_s (S+_3s S+_{3s+5} S+_{3s+10} + h.c.) (s = 0-3)
 	//
@@ -48,11 +48,13 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
 	int nQubits = nLayers * 12;
 	int pauliLength = nQubits * 3 + nLayers * 32 + 3;
-	double* coefs = (double*)malloc(sizeof(double) * pauliLength);
+	double* coefs = (double*)calloc(pauliLength, sizeof(double));
 	int** listOfPauliList = (int**)malloc(sizeof(int*) * pauliLength);
 	int i, j;
+
+	// initialize all values to zero with calloc
 	for (i = 0; i < pauliLength; ++i) {
-		listOfPauliList[i] = (int*)malloc(sizeof(int) * nQubits);
+		listOfPauliList[i] = (int*)calloc(nQubits, sizeof(int));
 	}
 	int cnt = 0, s = 0;
 
@@ -63,19 +65,17 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 			for (j = 0; j < nQubits; ++j) {
 				if (j == 12 * s + i || j == (12 * (s + 1) + i) % nQubits)
 					listOfPauliList[cnt][j] = 3;
-				else
-					listOfPauliList[cnt][j] = 0;
 			}
 			cnt++;
 		}
+		
+		
 		// XX terms
 		for (i = 0; i < 12; ++i) {
 			coefs[cnt] = -alpha / (2 * g * g);
-			for (j = 0; j < nQubits; ++j) {
+     		for (j = 0; j < nQubits; ++j) {
 				if (j == 12 * s + i || j == (12 * (s + 1) + i) % nQubits)
 					listOfPauliList[cnt][j] = 1;
-				else
-					listOfPauliList[cnt][j] = 0;
 			}
 			cnt++;
 		}
@@ -85,8 +85,6 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 			for (j = 0; j < nQubits; ++j) {
 				if (j == 12 * s + i || j == (12 * (s + 1) + i) % nQubits)
 					listOfPauliList[cnt][j] = 2;
-				else
-					listOfPauliList[cnt][j] = 0;
 			}
 			cnt++;
 		}
@@ -109,8 +107,6 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 			for (j = 0; j < nQubits; ++j) {
 				if (j / 12 == s && (j%12 == e0 || j % 12 == e1 || j % 12 == e2))
 					listOfPauliList[cnt][j] = 1;
-				else
-					listOfPauliList[cnt][j] = 0;
 			}
 			cnt++;
 
@@ -122,11 +118,6 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 						listOfPauliList[cnt][j] = 1;
 					else if (j % 12 == e1 || j % 12 == e2)
 						listOfPauliList[cnt][j] = 2;
-					else
-						listOfPauliList[cnt][j] = 0;
-				}
-				else {
-					listOfPauliList[cnt][j] = 0;
 				}
 			}
 			cnt++;
@@ -134,16 +125,11 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 			// -YXY
 			coefs[cnt] = 1 / (8 * g * g);
 			for (j = 0; j < nQubits; ++j) {
-				if (j / 3 == s) {
-					if (j % 3 == e1)
+				if (j / 12 == s) {
+					if (j % 12 == e1)
 						listOfPauliList[cnt][j] = 1;
-					else if (j % 3 == e0 || j % 3 == e2)
+					else if (j % 12 == e0 || j % 12 == e2)
 						listOfPauliList[cnt][j] = 2;
-					else
-						listOfPauliList[cnt][j] = 0;
-				}
-				else {
-					listOfPauliList[cnt][j] = 0;
 				}
 			}
 			cnt++;
@@ -151,35 +137,33 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 			// -XYY
 			coefs[cnt] = 1 / (8 * g * g);
 			for (j = 0; j < nQubits; ++j) {
-				if (j / 3 == s) {
-					if (j % 3 == e2)
+				if (j / 12 == s) {
+					if (j % 12 == e2)
 						listOfPauliList[cnt][j] = 1;
-					else if (j % 3 == e0 || j % 3 == e1)
+					else if (j % 12 == e0 || j % 12 == e1)
 						listOfPauliList[cnt][j] = 2;
-					else
-						listOfPauliList[cnt][j] = 0;
-				}
-				else {
-					listOfPauliList[cnt][j] = 0;
 				}
 			}
 			cnt++;
 		}
 	}
-	// shift the matrix to PSD by adding identities
-	coefs[cnt] = 4 * (g * g / 2) * (nQubits - 6 * (nLayers % 2));
+	
+	// shift the matrix to PD by adding identities
+	coefs[cnt] = (g * g / 2) * (nQubits - 24 * (nLayers % 2));
 	for (j = 0; j < nQubits; ++j)
 		listOfPauliList[cnt][j] = 0;
 	cnt++;
-	coefs[cnt] = 4 * (alpha / (2 * g * g)) * (2 * nQubits);
-	for (j = 0; j < nQubits; ++j)
-		listOfPauliList[cnt][j] = 0;
-	cnt++;
-	coefs[cnt] = 8 * (1 / (2 * g * g)) * (nLayers);
+	
+	coefs[cnt] = (alpha / (2 * g * g)) * (2 * nQubits);
 	for (j = 0; j < nQubits; ++j)
 		listOfPauliList[cnt][j] = 0;
 	cnt++;
 
+	coefs[cnt] = 8 * (1 / (2 * g * g)) * (nLayers);
+	for (j = 0; j < nQubits; ++j)
+		listOfPauliList[cnt][j] = 0;
+	cnt++;
+	
 
 	// Compute the Hamiltonian of the model in Pauli basis
 	CALL_AND_CHECK_STATUS(pauli_hamiltonian_matrix(dest, nQubits, pauliLength, listOfPauliList, coefs), "Error during computing the pauli hamiltonian\n");
