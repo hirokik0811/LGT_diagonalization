@@ -3,6 +3,7 @@
 #define PAULIHAMILTONIAN_INCLUDED
 #include <mkl.h>
 #include "pauli_operator.h"
+#include <stdbool.h> 
 
 #define CALL_AND_CHECK_STATUS(function, error_message) do { \
           if(function != SPARSE_STATUS_SUCCESS)             \
@@ -17,6 +18,8 @@ sparse_status_t pauli_hamiltonian_matrix(sparse_matrix_t* const dest, int const 
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
 	sparse_matrix_t P = NULL; // a matrix to store the next pauli to be added
+	sparse_matrix_t temp = NULL; // a matrix to store the computation result temporarily
+	bool is_P_destroyed = false, is_temp_destroyed = false;
 
 	struct matrix_descr descr;
 	descr.type = SPARSE_MATRIX_TYPE_GENERAL;
@@ -36,21 +39,64 @@ sparse_status_t pauli_hamiltonian_matrix(sparse_matrix_t* const dest, int const 
 		for (j = 0; j < nQubits; ++j) {
 			pauliList[j] = listOfPauliList[i][j];
 		}
+		// Compute the Pauli term
 		CALL_AND_CHECK_STATUS(pauli_operator_matrix(&P, nQubits, pauliList, coefs[i]), "Error when computing a pauli term\n"); // define the ith pauli term
+		is_P_destroyed = false;
+
+		// Add P to the sum
 		MKL_Complex16 one = { 1.0, 0.0 };
-		CALL_AND_CHECK_STATUS(mkl_sparse_z_add(SPARSE_OPERATION_NON_TRANSPOSE, *dest, one, P, dest),
-			"Error when addition of two pauli terms\n");
+		CALL_AND_CHECK_STATUS(mkl_sparse_z_add(SPARSE_OPERATION_NON_TRANSPOSE, *dest, one, P, &temp),
+			"Error when addition of two matrices\n");
+		is_temp_destroyed = false;
+
+		// Destroy old dest
+		status = mkl_sparse_destroy(*dest);
+		if (status != SPARSE_STATUS_SUCCESS)
+		{
+			printf(" Error during MKL_SPARSE_DESTROY(*dest) \n"); fflush(0);
+		}
+		
+		// Destroy P
+		status = mkl_sparse_destroy(P);
+		if (status != SPARSE_STATUS_SUCCESS)
+		{
+			printf(" Error during MKL_SPARSE_DESTROY(P) \n"); fflush(0);
+		}
+		else {
+			is_P_destroyed = true;
+		}
+
+		// Copy the sum to dest
+		CALL_AND_CHECK_STATUS(mkl_sparse_copy(temp, descr, dest),
+			"Error when copying temp to dest\n");
+
+		// Destroy temp
+		status = mkl_sparse_destroy(temp);
+		if (status != SPARSE_STATUS_SUCCESS)
+		{
+			printf(" Error during MKL_SPARSE_DESTROY(temp) \n"); fflush(0);
+		}
+		else {
+			is_temp_destroyed = true;
+		}
 	}	
 
 memory_free:
-
 	free(pauliList);
-	status = mkl_sparse_destroy(P);
-	if (status != SPARSE_STATUS_SUCCESS)
-	{
-		printf(" Error during MKL_SPARSE_DESTROY(P) \n"); fflush(0);
+	if (!is_P_destroyed) {
+		status = mkl_sparse_destroy(P);
+		if (status != SPARSE_STATUS_SUCCESS)
+		{
+			printf(" Error during MKL_SPARSE_DESTROY(P) \n"); fflush(0);
+		}
 	}
-
+	if (!is_temp_destroyed) {
+		status = mkl_sparse_destroy(temp);
+		if (status != SPARSE_STATUS_SUCCESS)
+		{
+			printf(" Error during MKL_SPARSE_DESTROY(temp) \n"); fflush(0);
+		}
+	}
 	return status;
 }
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<diags major="2" minor="0">
+
+<diag id="1">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>1975886970</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>12800</threadid>
+			<stackstamp>1975934440</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>c:\users\kwibu\source\repos\lgt_diagonalization\triangleplaquette\x64\debug\triangleplaquette.exe</mod>
+				<rva>0x11032</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="2">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>10593401550</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>15656</threadid>
+			<stackstamp>10598779932</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll</mod>
+				<rva>0x1004d0</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="3">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>10600606927</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>9424</threadid>
+			<stackstamp>10600630806</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll</mod>
+				<rva>0x1004d0</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="4">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>10601884708</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>18036</threadid>
+			<stackstamp>10601920986</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll</mod>
+				<rva>0x1004d0</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>

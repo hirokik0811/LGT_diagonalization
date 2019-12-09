@@ -1,0 +1,20 @@
+
+=== Start: [2019/12/09 11:45:42] === 
+Analysis started...
+Result file: C:\Users\kwibu\source\repos\LGT_diagonalization\TrianglePlaquette\TrianglePlaquette\My Inspector Results - TrianglePlaquette\r000mi1\r000mi1.inspxe 
+Analysis started for c:\users\kwibu\source\repos\lgt_diagonalization\triangleplaquette\x64\debug\triangleplaquette.exe (pid = 8812) 
+Loaded module: c:\users\kwibu\source\repos\lgt_diagonalization\triangleplaquette\x64\debug\triangleplaquette.exe, address range [0x7ff7e9820000-0x7ff7e9850fff] 
+Loaded module: c:\windows\system32\kernelbase.dll, address range [0x7ff946e30000-0x7ff9470d2fff], minimal analysis 
+Loaded module: c:\windows\system32\kernel32.dll, address range [0x7ff9478c0000-0x7ff947971fff], minimal analysis 
+Loaded module: c:\windows\system32\ntdll.dll, address range [0x7ff949420000-0x7ff94960ffff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\inspector 2019\bin64\dnclrprofinfo.dll, address range [0x7ff9353a0000-0x7ff9353c8fff] 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_intel_thread.dll, address range [0x7ff8a6240000-0x7ff8a819afff] 
+Loaded module: c:\windows\system32\vcruntime140d.dll, address range [0x7ff935370000-0x7ff935393fff] 
+Loaded module: c:\windows\system32\ucrtbased.dll, address range [0x7ff8ad640000-0x7ff8ad802fff] 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll, address range [0x7ff8ad440000-0x7ff8ad63cfff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_core.dll, address range [0x7ff8a1e20000-0x7ff8a623ffff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\inspector 2019\bin64\runtime\libittnotify.dll, address range [0x7ff935330000-0x7ff935363fff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\libimalloc.dll, address range [0x15abef20000-0x15abef23fff] 
+Unloaded module: D:\PROGRAM_FILES\IntelSWTools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\libimalloc.dll 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_avx2.dll, address range [0x7ff892c00000-0x7ff895914fff] 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_vml_avx2.dll, address range [0x7ff8a11c0000-0x7ff8a1e17fff] 

@@ -50,7 +50,6 @@ sparse_status_t sigma_matrix(sparse_matrix_t* const S, int const id, double cons
 		"Error when creating the sigma matrix in csr format\n");
 
 memory_free:
-	//mkl_free(values); mkl_free(columns); mkl_free(rowIndex);
 
 	// return status
 	return status;

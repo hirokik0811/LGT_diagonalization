@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<snippets>
+  <file name="C:\Users\kwibu\source\repos\LGT_diagonalization\TrianglePlaquette\TrianglePlaquette\TrianglePlaquette.c" md5="680ae41d704a0f477f64adaffe0039e7">
+    <snippet line="81">
+      <line line="78">	</line>
+      <line line="79">	//CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&amp;H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");</line>
+      <line line="80">	CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&amp;H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");</line>
+      <line line="81"/>
+      <line line="82">	// Compute the block Hamiltonian with zero flux</line>
+    </snippet>
+    <snippet line="124">
+      <line line="121">    M0 = n_rowsP;</line>
+      <line line="122">    E = (double*)malloc(n_rowsP * sizeof(double));</line>
+      <line line="123">    X = (MKL_Complex16*)malloc((n_rowsP * n_rowsP ) * sizeof(MKL_Complex16));</line>
+      <line line="124">    res = (double*)malloc(n_rowsP * sizeof(double));</line>
+      <line line="125"/>
+    </snippet>
+    <snippet line="134">
+      <line line="131">    fpm[0] = 1; /* Extended Eigensolver routines print runtime status to the screen. */</line>
+      <line line="132"/>
+      <line line="133">    zfeast_hcsrev(</line>
+      <line line="134">        &amp;UPLO,   /* IN: UPLO = 'U', stores the upper triangle part of the matrix */</line>
+      <line line="135">        &amp;n_rowsP,      /* IN: Size of the problem */</line>
+    </snippet>
+  </file>
+  <file name="C:\Users\kwibu\source\repos\LGT_diagonalization\TrianglePlaquette\TrianglePlaquette\square_tessellation.h" md5="e09f076d04d9d7fd07e1772a7d61d8c3">
+    <snippet line="57">
+      <line line="54">    // initialize all values to zero with calloc</line>
+      <line line="55">    for (i = 0; i &lt; pauliLength; ++i) {</line>
+      <line line="56">        listOfPauliList[i] = (int*)calloc(nQubits, sizeof(int));</line>
+      <line line="57">    }</line>
+      <line line="58">    int cnt = 0, s = 0;</line>
+    </snippet>
+  </file>
+</snippets>

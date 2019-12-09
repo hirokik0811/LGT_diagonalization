@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <mkl.h>
-#include "triangle_plaquette_hamiltonian.h"
-//#include "square_tessellation.h"
+//#include "triangle_plaquette_hamiltonian.h"
+#include "square_tessellation.h"
 //#define N_LAYERS 2
 //#define G 0.1
 //#define ALPHA 1.0
@@ -64,23 +64,28 @@ int main(int argc, char* argv[])
 
 
 	// Compute the Hamiltonian matrix of the triangle model and store it to H
-	/*
+	
+	
 	// test Pauli operator
-	int* listOfPauliList = malloc(3*sizeof(int));
-	listOfPauliList[0] = 1; listOfPauliList[1] = 3; listOfPauliList[2] = 3;
-	CALL_AND_CHECK_STATUS(pauli_operator_matrix(&H, 3, listOfPauliList, 0.5), "Error during computing a triangle plaquette matrix");
-	*/
+	
+	double* coefList = malloc(20 * sizeof(double));
+	int** listOfPauliList = malloc(20*sizeof(int*));
+	for (i = 0; i < 20; ++i) {
+		coefList[i] = 1.0;
+		listOfPauliList[i] = calloc(20, sizeof(int));
+	}
+	
+	//CALL_AND_CHECK_STATUS(pauli_hamiltonian_matrix(&H, 20, 20, listOfPauliList, coefList), "Error during computing a triangle plaquette matrix");
+	
 	//CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
 	CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
-
 	// Compute the block Hamiltonian with zero flux
-	//CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
-	//	"Error during computing a block Hamiltonian corresponding to zero flux\n");
+	CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
+		"Error during computing a block Hamiltonian corresponding to zero flux\n");
 
 	// Check the data
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(H, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(zeroH, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
 		"Error after MKL_SPARSE_Z_EXPORT_CSR  H\n");
-
 
 	// Convert zero-based indexing to one-based indexing
 	for (i = 0; i < n_rowsP; ++i) {
@@ -200,6 +205,7 @@ memory_free:
 	{
 		printf(" Error after MKL_SPARSE_DESTROY(zeroH) \n"); fflush(0);
 	}
+	mkl_free_buffers();
 
 	return 0;
 	

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<diags major="2" minor="0">
+
+<diag id="1">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>2808196407</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>9484</threadid>
+			<stackstamp>2808239671</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>c:\windows\system32\ntdll.dll</mod>
+				<rva>0x250a1</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="2">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>4700778852</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>12620</threadid>
+			<stackstamp>4700822659</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>c:\windows\system32\ntdll.dll</mod>
+				<rva>0x33d60</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="3">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>5073645958</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>13952</threadid>
+			<stackstamp>5073666064</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>c:\windows\system32\ntdll.dll</mod>
+				<rva>0x33d60</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="4">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>5186105520</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>13724</threadid>
+			<stackstamp>5186135412</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>c:\windows\system32\ntdll.dll</mod>
+				<rva>0x33d60</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="5">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>31825466812</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>19188</threadid>
+			<stackstamp>31825486871</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll</mod>
+				<rva>0x1004d0</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="6">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>31915677346</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>19196</threadid>
+			<stackstamp>31915697634</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll</mod>
+				<rva>0x1004d0</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="7">
+	<type description="ThreadStart">233</type>
+	<message>
+		<timestamp>31945815639</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>19192</threadid>
+			<stackstamp>31945835802</stackstamp>
+			<stacktrace>
+			<loc>
+				<mod>d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll</mod>
+				<rva>0x1004d0</rva>
+			</loc>
+			</stacktrace>
+		</thread>
+	</message>
+</diag>
+
+<diag id="8">
+	<type description="ThreadEnd">231</type>
+	<message>
+		<timestamp>172934956622</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>13724</threadid>
+			<stackstamp>172934978976</stackstamp>
+		</thread>
+	</message>
+</diag>
+
+<diag id="9">
+	<type description="ThreadEnd">231</type>
+	<message>
+		<timestamp>172935673588</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>13952</threadid>
+			<stackstamp>172935711083</stackstamp>
+		</thread>
+	</message>
+</diag>
+
+<diag id="10">
+	<type description="ThreadEnd">231</type>
+	<message>
+		<timestamp>172936391542</timestamp>
+		<thread>
+			<thrname></thrname>
+			<threadid>12620</threadid>
+			<stackstamp>172936428554</stackstamp>
+		</thread>
+	</message>
+</diag>

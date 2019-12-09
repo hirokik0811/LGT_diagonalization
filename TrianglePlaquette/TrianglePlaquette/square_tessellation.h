@@ -174,6 +174,8 @@ memory_free:
 		free(listOfPauliList[i]);
 	}
 	free(listOfPauliList);
+
+	return status;
 }
 
 

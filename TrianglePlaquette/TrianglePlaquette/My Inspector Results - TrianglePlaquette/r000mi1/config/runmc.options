@@ -1,0 +1,22 @@
+-r
+C:\Users\kwibu\source\repos\LGT_diagonalization\TrianglePlaquette\TrianglePlaquette\My Inspector Results - TrianglePlaquette\r000mi1
+--no-access-checks
+--no-analyze-stack
+--leak-maximum=100000
+--leak-check-only
+--leak-check-on-exit
+--check-resource-leaks
+--leak-check-report-reachable
+--freelist-vol=0
+--guard-zone-size=0
+--stack-depth=8
+--no-close-console
+--mrte-mode=auto
+--heartbeat=1
+--
+C:\Users\kwibu\Source\Repos\LGT_diagonalization\TrianglePlaquette\x64\Debug\TrianglePlaquette.exe
+2
+0.1
+1.0
+0.0
+10000.0

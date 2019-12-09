@@ -9,7 +9,7 @@
 // Compute a Kronecker product of two matrices A \otimes B = C.
 // c_{(i-1)*nrowB+k, (j-1)ncolB+l} = a_{i,j} * b_{k, l}
 
-// For sparse Hermitian matrices in CSR format. The output contains only upper triangle part. 
+// For sparse Hermitian matrices in CSR format. The output contains only upper triangle part. Destroys the two input matrices afterwards. 
 sparse_status_t kronecker_sparse_z_csr_h(sparse_matrix_t * const C, sparse_matrix_t const A, sparse_matrix_t const B) {
 	
 	/* To avoid constantly repeating the part of code that checks inbound SparseBLAS functions' status,
@@ -119,18 +119,17 @@ sparse_status_t kronecker_sparse_z_csr_h(sparse_matrix_t * const C, sparse_matri
 
 /* Deallocate memory */
 memory_free :
-	// delocate memories used for extracting data of matrices
-	mkl_free(valuesC); 
-	mkl_free(rows_indxC); 
-	mkl_free(cols_indxC);
-
 	//Release matrix handle and deallocate arrays for which we allocate memory ourselves.
 	status = mkl_sparse_destroy(cooC);
 	if (status != SPARSE_STATUS_SUCCESS)
 	{
 		printf(" Error after MKL_SPARSE_DESTROY(cooC) \n"); fflush(0);
 	}
-
+	// delocate memories used for extracting data of matrices
+	mkl_free(valuesC);
+	mkl_free(rows_indxC);
+	mkl_free(cols_indxC);
+	mkl_free_buffers();
     // return status
 	return status;
 

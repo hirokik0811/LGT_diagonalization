@@ -1,0 +1,25 @@
+
+=== Start: [2019/12/09 11:49:32] === 
+Analysis started...
+Result file: C:\Users\kwibu\source\repos\LGT_diagonalization\TrianglePlaquette\TrianglePlaquette\My Inspector Results - TrianglePlaquette\r001mi2\r001mi2.inspxe 
+Analysis started for c:\users\kwibu\source\repos\lgt_diagonalization\triangleplaquette\x64\debug\triangleplaquette.exe (pid = 15264) 
+Loaded module: c:\users\kwibu\source\repos\lgt_diagonalization\triangleplaquette\x64\debug\triangleplaquette.exe, address range [0x7ff725fb0000-0x7ff725fe0fff] 
+Loaded module: c:\windows\system32\kernelbase.dll, address range [0x7ffa5d0a0000-0x7ffa5d342fff] 
+Loaded module: c:\windows\system32\kernel32.dll, address range [0x7ffa5dcd0000-0x7ffa5dd81fff] 
+Loaded module: c:\windows\system32\ntdll.dll, address range [0x7ffa5f420000-0x7ffa5f60ffff] 
+Loaded module: c:\windows\system32\vcruntime140d.dll, address range [0x7ffa46650000-0x7ffa46673fff] 
+Loaded module: c:\windows\system32\ucrtbased.dll, address range [0x7ffa10470000-0x7ffa10632fff] 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_intel_thread.dll, address range [0x7ff9ce840000-0x7ff9d079afff] 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019\windows\redist\intel64\compiler\libiomp5md.dll, address range [0x7ffa0dad0000-0x7ffa0dcccfff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_core.dll, address range [0x7ff9c7840000-0x7ff9cbc5ffff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\inspector 2019\bin64\runtime\libittnotify.dll, address range [0x7ffa46610000-0x7ffa46643fff], minimal analysis 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\libimalloc.dll, address range [0x22a32bf0000-0x22a32bf3fff] 
+Unloaded module: D:\PROGRAM_FILES\IntelSWTools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\libimalloc.dll 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\libimalloc.dll, address range [0x22a32bf0000-0x22a32bf3fff] 
+Unloaded module: D:\PROGRAM_FILES\IntelSWTools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\libimalloc.dll 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_avx2.dll, address range [0x7ff9c4b20000-0x7ff9c7834fff] 
+Loaded module: d:\program_files\intelswtools\compilers_and_libraries_2019.5.281\windows\redist\intel64\mkl\mkl_vml_avx2.dll, address range [0x7ff9cdbe0000-0x7ff9ce837fff] 
+Application exit code: 1 
+Result file: C:\Users\kwibu\source\repos\LGT_diagonalization\TrianglePlaquette\TrianglePlaquette\My Inspector Results - TrianglePlaquette\r001mi2\r001mi2.inspxe 
+Analysis canceled by user
+=== End: [2019/12/09 11:52:04] === 
