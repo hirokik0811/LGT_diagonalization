@@ -31,11 +31,9 @@ sparse_status_t pauli_hamiltonian_matrix(sparse_matrix_t* const dest, int const 
 	for (j = 0; j < nQubits; ++j) {
 		pauliList[j] = listOfPauliList[0][j];
 	}
-	printf("0 th Pauli Operator\n");
 	CALL_AND_CHECK_STATUS(pauli_operator_matrix(dest, nQubits, pauliList, coefs[0]), "Error during computing 0th pauli term\n"); // compute the first pauli term
 
 	for (i = 1; i < PauliLength; ++i) {
-		printf("%d th Pauli Operator\n", i);
 		for (j = 0; j < nQubits; ++j) {
 			pauliList[j] = listOfPauliList[i][j];
 		}

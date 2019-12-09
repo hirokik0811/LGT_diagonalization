@@ -28,7 +28,6 @@ sparse_status_t pauli_operator_matrix(sparse_matrix_t* const dest, int const nQu
 
 	int i;
 	for (i = 1; i < nQubits; ++i) {
-		printf("%d th tensor product\n", i);
 
 		// Compute Sigma
 		CALL_AND_CHECK_STATUS(sigma_matrix(&S, pauliList[i], 1.0), "Error constructing a sigma matrix\n");

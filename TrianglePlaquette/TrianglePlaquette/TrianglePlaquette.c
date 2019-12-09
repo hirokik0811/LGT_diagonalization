@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <mkl.h>
-//#include "triangle_plaquette_hamiltonian.h"
-#include "square_tessellation.h"
+#include "triangle_plaquette_hamiltonian.h"
+//#include "square_tessellation.h"
 //#define N_LAYERS 2
 //#define G 0.1
 //#define ALPHA 1.0
@@ -77,8 +77,8 @@ int main(int argc, char* argv[])
 	
 	//CALL_AND_CHECK_STATUS(pauli_hamiltonian_matrix(&H, 20, 20, listOfPauliList, coefList), "Error during computing a triangle plaquette matrix");
 	
-	//CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
-	CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
+	CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
+	//CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
 	// Compute the block Hamiltonian with zero flux
 	CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
 		"Error during computing a block Hamiltonian corresponding to zero flux\n");
