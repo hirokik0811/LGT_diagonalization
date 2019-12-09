@@ -14,9 +14,12 @@ sparse_status_t sigma_matrix(sparse_matrix_t* const S, int const id, double cons
           }                                                 \
 } while(0)
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
-	MKL_Complex16* values = (MKL_Complex16*)mkl_malloc(sizeof(MKL_Complex16) * 2, 64);
-	MKL_INT* columns = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * 2, 64);
-	MKL_INT* rowIndex = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * 3, 64);
+	MKL_Complex16* values;
+	MKL_INT* columns;
+	MKL_INT* rowIndex;
+	values = (MKL_Complex16*)mkl_malloc(sizeof(MKL_Complex16) * 2, 64);
+	columns = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * 2, 64);
+	rowIndex = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * 3, 64);
 
 
 	if (id == 1) {

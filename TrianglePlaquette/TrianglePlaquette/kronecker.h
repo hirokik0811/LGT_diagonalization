@@ -9,8 +9,8 @@
 // Compute a Kronecker product of two matrices A \otimes B = C.
 // c_{(i-1)*nrowB+k, (j-1)ncolB+l} = a_{i,j} * b_{k, l}
 
-// For sparse matrices in CSR format 
-sparse_status_t kronecker_sparse_z_csr(sparse_matrix_t * const C, sparse_matrix_t const A, sparse_matrix_t const B) {
+// For sparse Hermitian matrices in CSR format. The output contains only upper triangle part. 
+sparse_status_t kronecker_sparse_z_csr_h(sparse_matrix_t * const C, sparse_matrix_t const A, sparse_matrix_t const B) {
 	
 	/* To avoid constantly repeating the part of code that checks inbound SparseBLAS functions' status,
    use macro CALL_AND_CHECK_STATUS */
@@ -66,29 +66,52 @@ sparse_status_t kronecker_sparse_z_csr(sparse_matrix_t * const C, sparse_matrix_
 
 
 	// allocate memories for the output matrix C. C will be stored in coo format first and converted to csr afterwards. 
-	nnzC = nnzA * nnzB;
 	n_rowsC = n_rowsA * n_rowsB;
 	n_colsC = n_colsA * n_colsB;
+	nnzC = nnzA * nnzB;
 	valuesC = (MKL_Complex16*)mkl_malloc(sizeof(MKL_Complex16) * nnzC, 64);
 	rows_indxC = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * nnzC, 64);
 	cols_indxC = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * nnzC, 64);
 
+	int non_zero_diag = 0; // count the number of non-zero diagonal elements
 	// compute C
 	for (rowA = 0; rowA < n_rowsA; ++rowA) {
 		for (i = rows_startA[rowA]; i < rows_endA[rowA]; i++) {
 			int colA = col_indxA[i];
-			for (rowB = 0; rowB < n_rowsB; ++rowB) {
-				for (j = rows_startB[rowB]; j < rows_endB[rowB]; j++) {
-					int colB = col_indxB[j];
-					MKL_Complex16 c_val = { valuesA[i].real * valuesB[j].real - valuesA[i].imag * valuesB[j].imag, valuesA[i].real * valuesB[j].imag + valuesA[i].imag * valuesB[j].real };
-					valuesC[cnt] = c_val;
-					rows_indxC[cnt] = rowA * n_rowsB + rowB;
-					cols_indxC[cnt] = colA * n_colsB + colB;
-					cnt++;
+			if (colA > rowA) { // compute product for upper triangle only
+				for (rowB = 0; rowB < n_rowsB; ++rowB) {
+					for (j = rows_startB[rowB]; j < rows_endB[rowB]; j++) {
+						int colB = col_indxB[j];
+						MKL_Complex16 c_val = { valuesA[i].real * valuesB[j].real - valuesA[i].imag * valuesB[j].imag, valuesA[i].real * valuesB[j].imag + valuesA[i].imag * valuesB[j].real };
+						valuesC[cnt] = c_val;
+						rows_indxC[cnt] = rowA * n_rowsB + rowB;
+						cols_indxC[cnt] = colA * n_colsB + colB;
+						cnt++;
+					}
 				}
 			}
+			else if (colA == rowA) {
+				for (rowB = 0; rowB < n_rowsB; ++rowB) {
+					for (j = rows_startB[rowB]; j < rows_endB[rowB]; j++) {
+						int colB = col_indxB[j];
+						if (colB >= rowB) { // if the the element of A is on the diagonal, then compute with only upper triangle of B
+							MKL_Complex16 c_val = { valuesA[i].real * valuesB[j].real - valuesA[i].imag * valuesB[j].imag, valuesA[i].real * valuesB[j].imag + valuesA[i].imag * valuesB[j].real };
+							valuesC[cnt] = c_val;
+							rows_indxC[cnt] = rowA * n_rowsB + rowB;
+							cols_indxC[cnt] = colA * n_colsB + colB;
+							cnt++;
+							if (colB == rowB) non_zero_diag++;
+						}
+					}
+				}
+			}
+			else { continue; }
 		}
 	}
+	nnzC = cnt;
+	valuesC = (MKL_Complex16*)mkl_realloc(valuesC, sizeof(MKL_Complex16) * nnzC);
+	rows_indxC = (MKL_INT*)mkl_realloc(rows_indxC, sizeof(MKL_INT) * nnzC);
+	cols_indxC = (MKL_INT*)mkl_realloc(cols_indxC, sizeof(MKL_INT) * nnzC);
 	// create C in coo format
 	CALL_AND_CHECK_STATUS(mkl_sparse_z_create_coo(&cooC, indexing, n_rowsC, n_colsC, nnzC, rows_indxC, cols_indxC, valuesC), "Error occurs while constructing coo.\n");
 	// convert C to csr format

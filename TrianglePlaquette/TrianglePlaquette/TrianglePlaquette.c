@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <mkl.h>
-//#include "triangle_plaquette_hamiltonian.h"
-#include "square_tessellation.h"
+#include "triangle_plaquette_hamiltonian.h"
+//#include "square_tessellation.h"
 //#define N_LAYERS 2
 //#define G 0.1
 //#define ALPHA 1.0
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 	MKL_INT n_rowsP, n_colsP;
 
 	// Variables for feast eigensolver
-	char UPLO = 'F'; // Type of matrix: (F=full matrix, L/U - lower/upper triangular part of matrix);
+	char UPLO = 'U'; // Type of matrix: (F=full matrix, L/U - lower/upper triangular part of matrix);
 	MKL_INT* rows_indx = NULL;
 	MKL_INT fpm[128];      /* Array to pass parameters to Intel(R) MKL Extended Eigensolvers */
 
@@ -63,16 +63,22 @@ int main(int argc, char* argv[])
 	//
 
 
-	// Compute the Hamiltonian matrix of the triangle model and store it to P
+	// Compute the Hamiltonian matrix of the triangle model and store it to H
+	/*
+	// test Pauli operator
+	int* listOfPauliList = malloc(3*sizeof(int));
+	listOfPauliList[0] = 1; listOfPauliList[1] = 3; listOfPauliList[2] = 3;
+	CALL_AND_CHECK_STATUS(pauli_operator_matrix(&H, 3, listOfPauliList, 0.5), "Error during computing a triangle plaquette matrix");
+	*/
 	//CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
 	CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
 
 	// Compute the block Hamiltonian with zero flux
-	CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
-		"Error during computing a block Hamiltonian corresponding to zero flux\n");
+	//CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
+	//	"Error during computing a block Hamiltonian corresponding to zero flux\n");
 
 	// Check the data
-	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(zeroH, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
+	CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(H, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
 		"Error after MKL_SPARSE_Z_EXPORT_CSR  H\n");
 
 
@@ -120,7 +126,7 @@ int main(int argc, char* argv[])
 	fpm[0] = 1; /* Extended Eigensolver routines print runtime status to the screen. */
 
 	zfeast_hcsrev(
-		&UPLO,   /* IN: UPLO = 'F', stores the full matrix */
+		&UPLO,   /* IN: UPLO = 'U', stores the upper triangle part of the matrix */
 		&n_rowsP,      /* IN: Size of the problem */
 		valuesP,     /* IN: CSR matrix A, values of non-zero elements */
 		pointerB_P,    /* IN: CSR matrix A, index of the first non-zero element in row */

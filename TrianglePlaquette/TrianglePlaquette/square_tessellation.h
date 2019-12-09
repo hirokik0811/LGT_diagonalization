@@ -31,7 +31,7 @@ sparse_status_t square_tessellation_hamiltonian_matrix(sparse_matrix_t* const de
 	//       0 1 3 4  
 	//     C-2-A-5-D
 	//   6 7 9 10 0 
-	// D-8-B-11 C
+	// D-8-B-11-C
 	//     4 6 
 	//     D
 	//

@@ -16,7 +16,6 @@
 sparse_status_t pauli_hamiltonian_matrix(sparse_matrix_t* const dest, int const nQubits, int const PauliLength, int** const listOfPauliList, double* const coefs) {
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
-	sparse_matrix_t Sum = NULL; // a matrix to store the sum
 	sparse_matrix_t P = NULL; // a matrix to store the next pauli to be added
 
 	struct matrix_descr descr;
@@ -29,29 +28,23 @@ sparse_status_t pauli_hamiltonian_matrix(sparse_matrix_t* const dest, int const 
 	for (j = 0; j < nQubits; ++j) {
 		pauliList[j] = listOfPauliList[0][j];
 	}
-	printf("\n");
-	CALL_AND_CHECK_STATUS(pauli_operator_matrix(&Sum, nQubits, pauliList, coefs[0]), "Error during computing 0th pauli term\n"); // compute the first pauli term
-	//CALL_AND_CHECK_STATUS(mkl_sparse_copy(P, descr, &Sum), "Error during copying a pauli operator at the 0th site\n");
+	printf("0 th Pauli Operator\n");
+	CALL_AND_CHECK_STATUS(pauli_operator_matrix(dest, nQubits, pauliList, coefs[0]), "Error during computing 0th pauli term\n"); // compute the first pauli term
 
 	for (i = 1; i < PauliLength; ++i) {
+		printf("%d th Pauli Operator\n", i);
 		for (j = 0; j < nQubits; ++j) {
 			pauliList[j] = listOfPauliList[i][j];
 		}
 		CALL_AND_CHECK_STATUS(pauli_operator_matrix(&P, nQubits, pauliList, coefs[i]), "Error when computing a pauli term\n"); // define the ith pauli term
 		MKL_Complex16 one = { 1.0, 0.0 };
-		CALL_AND_CHECK_STATUS(mkl_sparse_z_add(SPARSE_OPERATION_NON_TRANSPOSE, Sum, one, P, &Sum),
+		CALL_AND_CHECK_STATUS(mkl_sparse_z_add(SPARSE_OPERATION_NON_TRANSPOSE, *dest, one, P, dest),
 			"Error when addition of two pauli terms\n");
 	}	
-	CALL_AND_CHECK_STATUS(mkl_sparse_copy(Sum, descr, dest), "Error during copying a pauli operator\n");
 
 memory_free:
 
 	free(pauliList);
-	status = mkl_sparse_destroy(Sum);
-	if (status != SPARSE_STATUS_SUCCESS)
-	{
-		printf(" Error during MKL_SPARSE_DESTROY(Sum) \n"); fflush(0);
-	}
 	status = mkl_sparse_destroy(P);
 	if (status != SPARSE_STATUS_SUCCESS)
 	{
