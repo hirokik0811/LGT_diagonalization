@@ -5,8 +5,8 @@
 #include <math.h>
 #include <mkl.h>
 #include <stdbool.h>
-#include "triangle_plaquette_hamiltonian.h"
-//#include "square_tessellation.h"
+//#include "triangle_plaquette_hamiltonian.h"
+#include "square_tessellation.h"
 
 //#define N_LAYERS 2
 //#define G 0.1
@@ -137,8 +137,8 @@ int main(int argc, char* argv[])
 		*/
 		//CALL_AND_CHECK_STATUS(pauli_hamiltonian_matrix(&H, 20, 20, listOfPauliList, coefList), "Error during computing a triangle plaquette matrix");
 
-		CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
-		//CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
+		//CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
+		CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
 		// Compute the block Hamiltonian with zero flux
 		CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
 			"Error during computing a block Hamiltonian corresponding to zero flux\n");
@@ -178,7 +178,7 @@ int main(int argc, char* argv[])
 		rows_indx[i] = pointerB_P[i];
 	rows_indx[n_rowsP] = pointerE_P[n_rowsP - 1];
 
-	M0 = n_rowsP;
+	M0 = n_rowsP/200;
 	E = (double*)malloc(n_rowsP * sizeof(double));
 	X = (MKL_Complex16*)malloc((n_rowsP * n_rowsP ) * sizeof(MKL_Complex16));
 	res = (double*)malloc(n_rowsP * sizeof(double));
