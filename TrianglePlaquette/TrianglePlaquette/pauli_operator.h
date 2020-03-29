@@ -23,7 +23,7 @@ sparse_status_t pauli_operator_matrix(sparse_matrix_t* const dest, int const nQu
 	sparse_matrix_t temp = NULL; // a matrix to store the kronecker product
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations. 
-	bool is_S_destroyed = false, is_temp_destroyed = false;
+	bool is_S_destroyed = true, is_temp_destroyed = true;
 	CALL_AND_CHECK_STATUS(sigma_matrix(dest, pauliList[0], coef), "Error constructing a sigma matrix \n");
 
 	int i;
@@ -88,7 +88,7 @@ memory_free:
 			printf(" Error during MKL_SPARSE_DESTROY(temp) \n"); fflush(0);
 		}
 	}
-	mkl_free_buffers();
+	//mkl_free_buffers();
 	return status;
 	
 }

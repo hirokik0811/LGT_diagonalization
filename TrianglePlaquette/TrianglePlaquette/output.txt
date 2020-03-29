@@ -1,283 +1,64 @@
-0 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-1 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-2 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-3 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-4 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-5 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-6 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-7 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-8 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-9 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-10 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-11 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-12 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-13 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-14 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-15 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-16 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-17 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-18 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-19 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-20 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-21 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-22 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-23 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-24 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-25 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-26 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-27 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-28 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-0 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-1 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-2 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-3 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-0 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-1 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-2 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-3 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-0 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-1 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-2 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-3 th Pauli Operator
-1 th tensor product
-2 th tensor product
-3 th tensor product
-4 th tensor product
-5 th tensor product
-pointerE_P[n_rowsP - 1] - 1 26
-Hamiltonian: 
-Shape: 10 x 10 
- {1, 1} -> 700.060 + 0.000 I, {1, 2} -> -50.000 + 0.000 I, {1, 9} -> -50.000 + 0.000 I,
- {2, 2} -> 700.000 + 0.000 I, {2, 3} -> -200.000 + 0.000 I, {2, 4} -> -200.000 + 0.000 I, {2, 6} -> -200.000 + 0.000 I, {2, 10} -> -50.000 + 0.000 I,
- {3, 3} -> 700.000 + 0.000 I, {3, 5} -> -200.000 + 0.000 I, {3, 7} -> -200.000 + 0.000 I,
- {4, 4} -> 700.000 + 0.000 I, {4, 5} -> -200.000 + 0.000 I, {4, 8} -> -200.000 + 0.000 I,
- {5, 5} -> 700.000 + 0.000 I, {5, 9} -> -200.000 + 0.000 I,
- {6, 6} -> 700.000 + 0.000 I, {6, 7} -> -200.000 + 0.000 I, {6, 8} -> -200.000 + 0.000 I,
- {7, 7} -> 700.000 + 0.000 I, {7, 9} -> -200.000 + 0.000 I,
- {8, 8} -> 700.000 + 0.000 I, {8, 9} -> -200.000 + 0.000 I,
- {9, 9} -> 700.000 + 0.000 I, {9, 10} -> -50.000 + 0.000 I,
- {10, 10} -> 700.060 + 0.000 I,
-Computing eigenvalues...
-Intel MKL Extended Eigensolvers: complex double precision driver
-Intel MKL Extended Eigensolvers: List of input parameters fpm(1:64)-- if different from default
-Intel MKL Extended Eigensolvers: fpm(1)=1
-Search interval [0.000000000000000e+00;1.000000000000000e+04]
-Intel MKL Extended Eigensolvers: Size subspace 10
-#Loop | #Eig  |    Trace     | Error-Trace |  Max-Residual
-0,10,7.000119999999997e+03,1.000000000000000e+00,2.303494184270985e-16
-Intel MKL Extended Eigensolvers have successfully converged (to desired tolerance).
-Intel MKL Extended Eigensolvers have successfully converged (to desired tolerance).
-FEAST OUTPUT INFO 0 
-Number of eigenvalues found 10 
-Computed
-Eigenvalues
-9.5797868e+01
-5.0000000e+02
-5.0000000e+02
-5.0000000e+02
-6.7159701e+02
-7.0006000e+02
-9.0000000e+02
-9.0000000e+02
-9.3266512e+02
-1.3000000e+03
+ { 1 , 1 } -> 1.000 + 0.000 I,
+ { 1 , 6 } -> 1.000 + 0.000 I,
+ { 1 , 11 } -> 1.000 + 0.000 I,
+ { 1 , 16 } -> 1.000 + 0.000 I,
+ { 2 , 2 } -> 1.000 + 0.000 I,
+ { 2 , 5 } -> 1.000 + 0.000 I,
+ { 2 , 12 } -> 0.000 + 1.000 I,
+ { 2 , 15 } -> 0.000 + -1.000 I,
+ { 3 , 3 } -> 1.000 + 0.000 I,
+ { 3 , 8 } -> 0.000 + -1.000 I,
+ { 3 , 9 } -> 1.000 + 0.000 I,
+ { 3 , 14 } -> 0.000 + 1.000 I,
+ { 4 , 4 } -> 1.000 + 0.000 I,
+ { 4 , 7 } -> 0.000 + 1.000 I,
+ { 4 , 10 } -> 0.000 + -1.000 I,
+ { 4 , 13 } -> 1.000 + 0.000 I,
+ { 5 , 2 } -> 1.000 + 0.000 I,
+ { 5 , 5 } -> 1.000 + 0.000 I,
+ { 5 , 12 } -> 0.000 + -1.000 I,
+ { 5 , 15 } -> 0.000 + 1.000 I,
+ { 6 , 1 } -> 1.000 + 0.000 I,
+ { 6 , 6 } -> 1.000 + 0.000 I,
+ { 6 , 11 } -> -1.000 + 0.000 I,
+ { 6 , 16 } -> -1.000 + 0.000 I,
+ { 7 , 4 } -> 0.000 + -1.000 I,
+ { 7 , 7 } -> 1.000 + 0.000 I,
+ { 7 , 10 } -> 1.000 + 0.000 I,
+ { 7 , 13 } -> 0.000 + 1.000 I,
+ { 8 , 3 } -> 0.000 + 1.000 I,
+ { 8 , 8 } -> 1.000 + 0.000 I,
+ { 8 , 9 } -> 0.000 + -1.000 I,
+ { 8 , 14 } -> 1.000 + 0.000 I,
+ { 9 , 3 } -> 1.000 + 0.000 I,
+ { 9 , 8 } -> 0.000 + 1.000 I,
+ { 9 , 9 } -> 1.000 + 0.000 I,
+ { 9 , 14 } -> 0.000 + -1.000 I,
+ { 10 , 4 } -> 0.000 + 1.000 I,
+ { 10 , 7 } -> 1.000 + 0.000 I,
+ { 10 , 10 } -> 1.000 + 0.000 I,
+ { 10 , 13 } -> 0.000 + -1.000 I,
+ { 11 , 1 } -> 1.000 + 0.000 I,
+ { 11 , 6 } -> -1.000 + 0.000 I,
+ { 11 , 11 } -> 1.000 + 0.000 I,
+ { 11 , 16 } -> -1.000 + 0.000 I,
+ { 12 , 2 } -> 0.000 + -1.000 I,
+ { 12 , 5 } -> 0.000 + 1.000 I,
+ { 12 , 12 } -> 1.000 + 0.000 I,
+ { 12 , 15 } -> 1.000 + 0.000 I,
+ { 13 , 4 } -> 1.000 + 0.000 I,
+ { 13 , 7 } -> 0.000 + -1.000 I,
+ { 13 , 10 } -> 0.000 + 1.000 I,
+ { 13 , 13 } -> 1.000 + 0.000 I,
+ { 14 , 3 } -> 0.000 + -1.000 I,
+ { 14 , 8 } -> 1.000 + 0.000 I,
+ { 14 , 9 } -> 0.000 + 1.000 I,
+ { 14 , 14 } -> 1.000 + 0.000 I,
+ { 15 , 2 } -> 0.000 + 1.000 I,
+ { 15 , 5 } -> 0.000 + -1.000 I,
+ { 15 , 12 } -> 1.000 + 0.000 I,
+ { 15 , 15 } -> 1.000 + 0.000 I,
+ { 16 , 1 } -> 1.000 + 0.000 I,
+ { 16 , 6 } -> -1.000 + 0.000 I,
+ { 16 , 11 } -> -1.000 + 0.000 I,
+ { 16 , 16 } -> 1.000 + 0.000 I,

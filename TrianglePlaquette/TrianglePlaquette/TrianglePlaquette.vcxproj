@@ -165,10 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eigensolver.h" />
+    <ClInclude Include="trace.h" />
     <ClInclude Include="kronecker.h" />
     <ClInclude Include="pauli_hamiltonian.h" />
     <ClInclude Include="pauli_operator.h" />
     <ClInclude Include="sigma_matrix.h" />
+    <ClInclude Include="conversion_tensor.h" />
     <ClInclude Include="square_tessellation.h" />
     <ClInclude Include="triangle_plaquette_hamiltonian.h" />
   </ItemGroup>
