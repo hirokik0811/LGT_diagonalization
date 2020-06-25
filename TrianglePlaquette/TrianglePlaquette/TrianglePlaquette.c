@@ -6,8 +6,9 @@
 #include <mkl.h>
 #include <stdbool.h>
 //#include "triangle_plaquette_hamiltonian.h"
-#include "conversion_tensor.h"
+//#include "conversion_tensor.h"
 //#include "square_tessellation.h"
+#include "toric_code_22.h"
 
 //#define N_LAYERS 2
 //#define G 0.1
@@ -18,7 +19,7 @@
 
 // the arguments must be: N_LAYERS, G, ALPHA, EMIN, EMAX, -o outputfilename or/and -i inputfilename
 
-/*
+
 int main(int argc, char* argv[])
 {
 #define CALL_AND_CHECK_STATUS(function, error_message) do { \
@@ -66,7 +67,7 @@ int main(int argc, char* argv[])
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations.
 	sparse_matrix_t H = NULL;
-	sparse_matrix_t zeroH = NULL;
+	//sparse_matrix_t zeroH = NULL;
 	sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
 
 	MKL_Complex16* valuesP = NULL;
@@ -131,14 +132,14 @@ int main(int argc, char* argv[])
 	else {// Compute the Hamiltonian matrix of the triangle model and store it to H
 		//CALL_AND_CHECK_STATUS(pauli_hamiltonian_matrix(&H, 20, 20, listOfPauliList, coefList), "Error during computing a triangle plaquette matrix");
 
-		CALL_AND_CHECK_STATUS(triangle_plaquette_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
+		CALL_AND_CHECK_STATUS(toric_code_22_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing a triangle plaquette matrix");
 		//CALL_AND_CHECK_STATUS(square_tessellation_hamiltonian_matrix(&H, nLayers, g, alpha), "Error during computing 8 triangles model Hamiltonian matrix");
 		// Compute the block Hamiltonian with zero flux
-		CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
-			"Error during computing a block Hamiltonian corresponding to zero flux\n");
+		//CALL_AND_CHECK_STATUS(zero_gauge_block(&zeroH, H, nLayers),
+		//	"Error during computing a block Hamiltonian corresponding to zero flux\n");
 
 		// Check the data
-		CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(zeroH, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
+		CALL_AND_CHECK_STATUS(mkl_sparse_z_export_csr(H, &indexing, &n_rowsP, &n_colsP, &pointerB_P, &pointerE_P, &columns_P, &valuesP),
 			"Error after MKL_SPARSE_Z_EXPORT_CSR  H\n");
 
 		// Convert zero-based indexing to one-based indexing
@@ -243,11 +244,12 @@ memory_free:
 		{
 			printf(" Error after MKL_SPARSE_DESTROY(H) \n"); fflush(0);
 		}
+		/*
 		status = mkl_sparse_destroy(zeroH);
 		if (status != SPARSE_STATUS_SUCCESS)
 		{
 			printf(" Error after MKL_SPARSE_DESTROY(zeroH) \n"); fflush(0);
-		}
+		}*/
 	}
 	mkl_free_buffers();
 
@@ -255,8 +257,7 @@ memory_free:
 	
 }
 
-*/
-
+/*
 int main(int argc, char* argv[])
 {
 #define CALL_AND_CHECK_STATUS(function, error_message) do { \
@@ -267,12 +268,15 @@ int main(int argc, char* argv[])
 		  goto memory_free;                                 \
 		  }                                                 \
 } while(0)
-	// Test trace
+	// Test 
+
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations.  
 
 	sparse_matrix_t P = NULL;
 	
-	CALL_AND_CHECK_STATUS(conversion_tensor(&P, 1), "Error constructing a sigma tensor \n");
+	CALL_AND_CHECK_STATUS(conversion_tensor(&P, 2), "Error constructing a sigma tensor \n");
+	//int list[2] = { 0, 1 };
+	//CALL_AND_CHECK_STATUS(pauli_operator_matrix(&P, 2, list, 1.0), "Error constructing a sigma tensor \n");
 	MKL_Complex16* valuesP = NULL;
 	MKL_INT* pointerB_P = NULL;
 	MKL_INT* pointerE_P = NULL;
@@ -310,4 +314,4 @@ memory_free:
 	{
 		printf(" Error after MKL_SPARSE_DESTROY(P) \n"); fflush(0);
 	}
-}
+}*/

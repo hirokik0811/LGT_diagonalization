@@ -6,10 +6,10 @@
 #include <string.h>
 
 
-// Compute a trace of a matrix A.
+// Recover the  Hermitian matrix from the upper triangular form in CSR format. 
 
 // For sparse Hermitian matrices in CSR format. 
-MKL_Complex16 trace_sparse_z_csr(sparse_matrix_t A) {
+sparse_status_t triangular_to_hermitian_sparse_z_csr(sparse_matrix_t A) {
 
 	/* To avoid constantly repeating the part of code that checks inbound SparseBLAS functions' status,
    use macro CALL_AND_CHECK_STATUS */
@@ -43,20 +43,29 @@ MKL_Complex16 trace_sparse_z_csr(sparse_matrix_t A) {
 	// count the number of non-zero elements in each matrix
 	nnzA = rows_endA[n_rowsA - 1];
 
+
+	// reallocate the arrays to have enough memory
+	valuesA = (MKL_Complex16*)mkl_realloc(valuesA, sizeof(MKL_Complex16) * nnzA*2);
+	col_indxA = (MKL_INT*)mkl_realloc(col_indxA, sizeof(MKL_INT) * nnzA * 2);
+
+	int cnt = 0;
 	// compute the trace
 	for (rowA = 0; rowA < n_rowsA; ++rowA) {
 		for (i = rows_startA[rowA]; i < rows_endA[rowA]; ++i) {
-			if (col_indxA[i] == rowA) { // if the value is on-diagonal, get its value and add it to tr_re and tr_im
+			if (col_indxA[i] != rowA) { // get the off-diagonal element A_{ij} and store its conjutate to A_{ji}
 				MKL_Complex16 val = valuesA[i];
-				tr_re += val.real;
-				tr_im += val.imag;
-				break;
+				MKL_Complex16 conj_val = { val.real, -val.imag };
+				valuesA[cnt] = conj_val;
+				cols_indxB[cnt] = rowA;
+				cnt++;
 			}
 		}
 	}
-	MKL_Complex16 tr = { tr_re, tr_im };
+	
+	
+
 memory_free:
 	
-	return tr;
+	return status;
 }
 #endif#pragma once

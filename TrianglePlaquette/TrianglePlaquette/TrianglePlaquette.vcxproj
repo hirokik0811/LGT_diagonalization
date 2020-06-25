@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eigensolver.h" />
+    <ClInclude Include="toric_code_22.h" />
     <ClInclude Include="trace.h" />
     <ClInclude Include="kronecker.h" />
     <ClInclude Include="pauli_hamiltonian.h" />

@@ -6,10 +6,10 @@
 #include <string.h>
 
 
-// Compute a trace of a matrix A.
+// Recover Hermitian from triangular matrix. 
 
-// For sparse Hermitian matrices in CSR format. 
-MKL_Complex16 trace_sparse_z_csr(sparse_matrix_t A) {
+// For sparse Hermitian matrices in CSR format. The input contains only upper triangle part. 
+MKL_Complex16 triangle_to_hermitian_sparse_z_csr(sparse_matrix_t A) {
 
 	/* To avoid constantly repeating the part of code that checks inbound SparseBLAS functions' status,
    use macro CALL_AND_CHECK_STATUS */
@@ -24,7 +24,6 @@ MKL_Complex16 trace_sparse_z_csr(sparse_matrix_t A) {
 
 	sparse_status_t status = SPARSE_STATUS_SUCCESS; // stores the status of MKL function evaluations.  
 	int rowA, colA, i; // indices to specify the diagonal values
-	double tr_re = 0, tr_im = 0; // real and imaginary parts of the trace
 
 	// output locations for mkl_sparse_c_export_csr
 	MKL_INT n_rowsA, n_colsA;
@@ -43,20 +42,28 @@ MKL_Complex16 trace_sparse_z_csr(sparse_matrix_t A) {
 	// count the number of non-zero elements in each matrix
 	nnzA = rows_endA[n_rowsA - 1];
 
+	// Matrix B to store the hermitian of the off-diagonal elements of A (i.e. B is lower triangle without diagonal elements)
+	MKL_INT nnzB = nnzA; // number of non-zero elements of matrix B
+	MKL_INT n_rowsC = K * K, n_colsC = K * K; // shape of the output matrix C
+	MKL_Complex16* valuesC = (MKL_Complex16*)mkl_malloc(sizeof(MKL_Complex16) * n_all, 64); // memory to store the values of C
+	MKL_INT* rows_indxC = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * (n_rowsC + 1), 64),
+		* cols_indxC = (MKL_INT*)mkl_malloc(sizeof(MKL_INT) * n_all, 64); // coordinates of non-zero elements of C (in coo format)
+	sparse_matrix_t cooC = NULL; // storage of C in coo format
+	int cnt = 0;
+
 	// compute the trace
 	for (rowA = 0; rowA < n_rowsA; ++rowA) {
 		for (i = rows_startA[rowA]; i < rows_endA[rowA]; ++i) {
-			if (col_indxA[i] == rowA) { // if the value is on-diagonal, get its value and add it to tr_re and tr_im
+			if (col_indxA[i] != rowA) { // if the value A_{ij} is off-diagonal, get its value and store its conjugate to A_{ji}
 				MKL_Complex16 val = valuesA[i];
-				tr_re += val.real;
-				tr_im += val.imag;
-				break;
+				
+				continue;
 			}
 		}
 	}
 	MKL_Complex16 tr = { tr_re, tr_im };
 memory_free:
-	
+
 	return tr;
 }
 #endif#pragma once
